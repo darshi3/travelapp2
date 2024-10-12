@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background-image: url('/images/bgimg.jpg'); /* Path to your image */
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //height: 100vh;
+    align-items: flex-start; /* Changed from center to flex-start to allow scrolling */
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    width: 60%;
+}
+
+h1 {
+    text-align: center;
+    color: #004a99; /* A subtle, professional blue shade */
+        font-family: 'Roboto', sans-serif; /* A modern, clean font */
+        font-size: 2.5em; /* A bit larger but still professional */
+        font-weight: bold; /* Make the font bold for emphasis */
+        letter-spacing: 1.5px; /* Slightly increase the spacing for elegance */
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+        margin-bottom: 20px;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+     max-width: 500px; /* Reduce the form width */
+     margin: 0 auto;
+}
+
+label {
+    margin-top: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+input, textarea {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.result {
+margin-top: 20px;
+padding: 10px;
+overflow: auto;
+max-height: 400px; /* Adjust to limit the height of the result box */
+overflow-y: auto;
+background-color: rgba(255, 255, 255, 0.5);
+}
+
+.result1 {
+margin-top: 10px;
+overflow: auto;
+padding: 10px;
+max-height: 400px; /* Adjust to limit the height of the result box */
+overflow-y: auto;
+background-color: rgba(255, 255, 255, 0.5); /*
+}
+
+.error {
+    color: red;
+}
+

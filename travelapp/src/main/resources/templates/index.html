@@ -1,0 +1,165 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/travel1.png" type="image/png">
+        <title>
+        Travel Itinerary Planner
+    </title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1><img src="/images/travel.png" alt="Icon Description" style="width: 100px; height: 100px; vertical-align: middle; display: inline-block;">
+    TRAVEL ITINERARY PlANNER</h1>
+    </div>
+    <form id="itineraryForm">
+
+        <label for="email">Email ID:</label>
+        <input type="text" id="email" name="email" required >
+        
+        <label for="destination">Destination:</label>
+        <input type="text" id="destination" name="destination" required >
+
+        <label for="duration">Number of Days:</label>
+        <input type="number" id="duration" name="duration" required>
+
+        <label for="preference">Preference:</label>
+        <textarea id="preference" name="preference" rows="4" required></textarea>
+
+        <button type="submit">Generate Itinerary</button>
+        <button type="button" id="otherButton">All Itinerary</button>
+    </form>
+
+
+    <div id="result" class="result" style="position: relative;">
+        <!-- Itinerary result will be displayed here -->
+    </div>
+
+    <div id="result1" class="result" style="position: relative;">
+        <!-- All Itinerary result will be displayed here -->
+    </div>
+</div>
+
+<script>
+
+
+    document.getElementById('itineraryForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const destination = document.getElementById('destination').value;
+    const duration = document.getElementById('duration').value;
+    const preference = document.getElementById('preference').value;
+
+    const itineraryData = {
+        email: email,
+        destination: destination,
+        duration: duration,
+        preference: preference,
+        generateditineraries: destination
+    };
+
+    fetch('http://localhost:8080/api/itinerary/generate_itinerary', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(itineraryData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('result').innerHTML = `
+         <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px;">
+            <h2><b>Your Itinerary</b></h2>
+            <p><b>Emailid:</b> ${data.email}</p>
+            <p><b>Destination:</b> ${data.destination}</b></p>
+            <p><b>Duration:</b> ${data.duration} days</p>
+            <p><b>Preference:</b> ${data.preference} </p>
+            <p><b>Itinerary Details:</b> ${data.generateditineraries}</p>
+          </div>
+
+        `;
+
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+
+
+<!-- second button  -->
+document.getElementById('otherButton').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    //document.getElementById('').innerHTML = "";
+    const email = document.getElementById('email').value; // Get the email from the input field
+
+    // Log the email and URL to ensure it's being substituted correctly
+    console.log(`http://localhost:8080/api/itinerary/email/${email}`);
+
+
+    // Now fetch the specific API endpoint using the dynamic email
+    fetch(`http://localhost:8080/api/itinerary/email/${email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())  // Parse the response to JSON
+    .then(data => {
+        if (Array.isArray(data)) {
+            // If the response is an array (multiple itineraries), loop through each item
+            data.forEach(item => {
+                document.getElementById('result').innerHTML += `
+                <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                    <h2><b>Your Itinerary</b></h2>
+                    <p><b>Emailid:</b> ${item.email}</p>
+                    <p><b>Destination:</b> ${item.destination}</p>
+                    <p><b>Duration:</b> ${item.duration} days</p>
+                    <p><b>Preference:</b> ${item.preference} </p>
+
+                  <p>  <b>Itinerary Details:</b> <br/>${item.generateditineraries}</p>
+                </div>
+                `;
+            });
+        } else {
+            // If it's a single object (single itinerary)
+            document.getElementById('result1').innerHTML = `
+            <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                <h2><b>Your Itinerary</b></h2>
+                <p><b>Destination:</b> ${data.destination}</p>
+                <p><b>Duration:</b> ${data.duration} days</p>
+                <p><b>Preference:</b> ${data.preference} </p>
+                <p><b>Itinerary Details:</b> <br/> ${data.generateditineraries}</p>
+            </div>
+            `;
+        }
+    })
+    .catch(error => console.error('Error:', error));  // Handle any errors
+});
+
+
+
+</script>
+<!--<script src="../js/scripts.js"></script>-->
+</body>
+</html>
+
+<!--mongodb+srv://pdarshi94:Shree@2024@cluster0.4v41p.mongodb.net/Itineraries?retryWrites=true&w=majority&appName=Cluster0-->
+
+
